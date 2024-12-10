@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
+
 
 app.use(express.json());
 
@@ -8,7 +9,6 @@ app.listen(port, () => {
     console.log(`Serveur lancé sur le port ${port}`);
 });
 
-// Classe pour représenter une note
 class Note {
     constructor(id, title, content) {
         this.id = id;
@@ -17,18 +17,15 @@ class Note {
     }
 }
 
-// Simuler le stockage local avec un tableau en mémoire
 let notes = [
     new Note(1, "Bienvenue", "Ceci est votre première note"),
     new Note(2, "Tâches à faire", "Apprendre Express.js")
 ];
 
-// Récupérer toutes les notes
 app.get("/notes", (req, res) => {
     res.status(200).json(notes);
 });
 
-// Récupérer une note par ID
 app.get("/notes/:id", (req, res) => {
     const noteId = parseInt(req.params.id);
     const note = notes.find((n) => n.id === noteId);
@@ -39,7 +36,7 @@ app.get("/notes/:id", (req, res) => {
     }
 });
 
-// Ajouter une nouvelle note
+
 app.post("/notes", (req, res) => {
     const { title, content } = req.body;
     if (!title || !content) {
@@ -50,7 +47,6 @@ app.post("/notes", (req, res) => {
     res.status(201).json(newNote);
 });
 
-// Modifier une note existante
 app.put("/notes/:id", (req, res) => {
     const noteId = parseInt(req.params.id);
     const { title, content } = req.body;
@@ -63,7 +59,6 @@ app.put("/notes/:id", (req, res) => {
     res.status(200).json(notes[noteIndex]);
 });
 
-// Supprimer une note
 app.delete("/notes/:id", (req, res) => {
     const noteId = parseInt(req.params.id);
     notes = notes.filter((n) => n.id !== noteId);
